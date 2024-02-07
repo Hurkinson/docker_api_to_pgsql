@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  pg_db:
+    image: postgres:13
+    container_name: pg_db
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: superadmin
+      POSTGRES_PASSWORD: my_password
+      POSTGRES_DB: fastapidb
+    ports:
+      - "5432:5432"
+
+  fastapi:
+    build: .
+    container_name: my_fastapi
+    ports:
+      - "8000:80"
+    depends_on:
+      - pg_db
+    environment:
+      DATABASE_URL: postgresql://superadmin:my_password@pg_db/fastapidb
+
+volumes:
+  postgres_data:

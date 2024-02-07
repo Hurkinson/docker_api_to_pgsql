@@ -1,0 +1,9 @@
+pandas
+requests
+typing
+fastapi
+pydantic
+uvicorn
+sqlalchemy
+psycopg2-binary
+alembic
